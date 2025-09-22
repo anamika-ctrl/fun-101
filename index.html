@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Question of Love</title>
+    <title>What's Your Name?</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
@@ -11,8 +11,6 @@
     <style>
         body {
             font-family: 'Gaegu', sans-serif;
-            background-color: #FFC0CB; /* Cute Korean pink theme */
-            color: #8A2BE2; /* Soft purple */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -27,6 +25,21 @@
             z-index: 10;
         }
 
+        .page-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            transition: opacity 0.5s ease-in-out;
+            text-align: center;
+        }
+
         .emoji {
             position: absolute;
             font-size: 2rem;
@@ -38,35 +51,86 @@
             z-index: 5;
         }
 
-        .emoji.heart {
-            color: #ff69b4; /* Hot pink hearts */
+        .dancing-girl-image {
+            width: 80%;
+            max-width: 400px;
+            animation: pulse 2s infinite ease-in-out;
         }
 
-        .emoji.sad {
-            color: #4b0082; /* Indigo/dark purple sad faces */
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
         }
     </style>
 </head>
-<body class="bg-[#FFC0CB] flex flex-col justify-center items-center min-h-screen p-4">
+<body class="p-4">
 
-    <div id="main-content" class="container">
-        <h1 id="question-text" class="text-6xl sm:text-8xl font-bold mb-8">I love</h1>
-        <div id="options" class="flex justify-center space-x-4">
-            <button id="yes-button" class="bg-[#FF69B4] text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-[#FFC0CB] transition-colors">BTS</button>
-            <button id="no-button" class="bg-[#FF69B4] text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-[#FFC0CB] transition-colors">seventeen</button>
+    <!-- Name Entry Page -->
+    <div id="entry-page" class="page-container bg-[#FFC0CB] text-[#8A2BE2]">
+        <div class="container bg-white p-8 rounded-xl shadow-md">
+            <h1 class="text-4xl sm:text-6xl font-bold mb-4">What's your name?</h1>
+            <input type="text" id="name-input" class="rounded-lg p-2 text-center text-black" placeholder="Type your name">
+            <button id="enter-button" class="mt-4 bg-[#FF69B4] text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-[#FFC0CB] hover:text-[#FF69B4] transition-colors">Enter</button>
+        </div>
+    </div>
+
+    <!-- Divya's Page -->
+    <div id="divya-page" class="page-container bg-[#FFC0CB] text-[#8A2BE2] hidden">
+        <div id="love-page-content" class="container">
+            <h1 id="question-text-divya" class="text-6xl sm:text-8xl font-bold mb-8">I love</h1>
+            <div id="options-divya" class="flex justify-center space-x-4">
+                <button id="yes-button" class="bg-[#FF69B4] text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-[#FFC0CB] hover:text-[#FF69B4] transition-colors">BTS</button>
+                <button id="no-button" class="bg-[#FF69B4] text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-[#FFC0CB] hover:text-[#FF69B4] transition-colors">seventeen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Shefali's Initial Page -->
+    <div id="shefali-page" class="page-container bg-[#F0E68C] text-[#B8860B] hidden">
+        <div id="rich-daddy-content" class="container">
+            <h1 id="question-text-shefali" class="text-3xl sm:text-5xl font-bold mb-8">When are you getting a rich daddy for us?</h1>
+            <div id="options-shefali" class="flex justify-center space-x-4">
+                <button id="tomorrow-button" class="bg-[#B8860B] text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-[#DAA520] transition-colors">Tomorrow</button>
+                <button id="today-button" class="bg-[#B8860B] text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-[#DAA520] transition-colors">Today</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Shefali's Dancing Page -->
+    <div id="shefali-dancing-page" class="page-container bg-[#F0E68C] text-[#B8860B] hidden">
+        <div class="container flex flex-col items-center">
+            <h1 class="text-4xl sm:text-6xl font-bold mb-4">Let's Celebrate!</h1>
+            <img src="https://i.ibb.co/L95j1Qn/dancing-girl.gif" alt="Dancing girl animated" class="dancing-girl-image">
         </div>
     </div>
     
     <script>
-        const questionText = document.getElementById('question-text');
-        const optionsDiv = document.getElementById('options');
+        const nameInput = document.getElementById('name-input');
+        const enterButton = document.getElementById('enter-button');
+        const entryPage = document.getElementById('entry-page');
+        const divyaPage = document.getElementById('divya-page');
+        const shefaliPage = document.getElementById('shefali-page');
+        const shefaliDancingPage = document.getElementById('shefali-dancing-page');
+
+        const questionTextDivya = document.getElementById('question-text-divya');
+        const optionsDivya = document.getElementById('options-divya');
         const yesButton = document.getElementById('yes-button');
         const noButton = document.getElementById('no-button');
+
+        const questionTextShefali = document.getElementById('question-text-shefali');
+        const optionsShefali = document.getElementById('options-shefali');
+        const tomorrowButton = document.getElementById('tomorrow-button');
+        const todayButton = document.getElementById('today-button');
         const body = document.body;
 
         const emojis = {
-            yes: ['😒', '😤', '🤢', '🤮', '💢', '😠', '💜'],
-            no: ['😔', '😞', '😥', '🙁', '😢', '💔', '😭']
+            divya_yes: ['😒', '😤', '🤢', '🤮', '💢', '😠', '💜'],
+            divya_no: ['😔', '😞', '😥', '🙁', '😢', '💔', '😭'],
+            shefali: ['💰', '💵', '🤑', '💎', '💳', '💸', '💲']
         };
 
         function createEmoji(type) {
@@ -76,7 +140,6 @@
             
             body.appendChild(emoji);
 
-            // Trigger the transition after the element is added to the DOM
             setTimeout(() => {
                 const offsetX = (Math.random() - 0.5) * 400;
                 const offsetY = (Math.random() - 0.5) * 400;
@@ -86,29 +149,51 @@
             
             setTimeout(() => {
                 emoji.remove();
-            }, 1500); // Remove after animation
+            }, 1500);
         }
 
         function createEmojis(type) {
-            // Create multiple emojis to simulate a "burst"
             for (let i = 0; i < 20; i++) {
                 setTimeout(() => createEmoji(type), i * 30);
             }
         }
 
+        enterButton.addEventListener('click', () => {
+            const name = nameInput.value.toLowerCase().trim();
+            if (name ==='divya' || name === 'divya rana') {
+                entryPage.classList.add('hidden');
+                divyaPage.classList.remove('hidden');
+            } else if (name === 'shefali' || name === 'shefali mathur') {
+                entryPage.classList.add('hidden');
+                shefaliPage.classList.remove('hidden');
+            } else {
+                alert('I don\'t know that name. Please try again.');
+            }
+        });
+
         yesButton.addEventListener('click', () => {
-            questionText.textContent = "But we hate you , get lost!";
-            optionsDiv.classList.add('hidden');
-            createEmojis('yes');
+            questionTextDivya.textContent = "But we hate you , get lost!";
+            optionsDivya.classList.add('hidden');
+            createEmojis('divya_yes');
         });
 
         noButton.addEventListener('click', () => {
-            questionText.textContent = "Dhokebazzzzz";
-            optionsDiv.classList.add('hidden');
-            createEmojis('no');
+            questionTextDivya.textContent = "Dhokebazzzzz";
+            optionsDivya.classList.add('hidden');
+            createEmojis('divya_no');
+        });
+
+        tomorrowButton.addEventListener('click', () => {
+            shefaliPage.classList.add('hidden');
+            shefaliDancingPage.classList.remove('hidden');
+            createEmojis('shefali');
+        });
+
+        todayButton.addEventListener('click', () => {
+            shefaliPage.classList.add('hidden');
+            shefaliDancingPage.classList.remove('hidden');
+            createEmojis('shefali');
         });
     </script>
 </body>
 </html>
-
-

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Question of Love</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Gaegu', sans-serif;
+            background-color: #FFC0CB; /* Cute Korean pink theme */
+            color: #8A2BE2; /* Soft purple */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+        }
+
+        .emoji {
+            position: absolute;
+            font-size: 2rem;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: transform 1.5s ease-out, opacity 1.5s ease-out;
+            z-index: 5;
+        }
+
+        .emoji.heart {
+            color: #ff69b4; /* Hot pink hearts */
+        }
+
+        .emoji.sad {
+            color: #4b0082; /* Indigo/dark purple sad faces */
+        }
+    </style>
+</head>
+<body class="bg-[#FFC0CB] flex flex-col justify-center items-center min-h-screen p-4">
+
+    <div id="main-content" class="container">
+        <h1 id="question-text" class="text-4xl sm:text-6xl font-bold mb-8">I love</h1>
+        <div id="options" class="flex justify-center space-x-4">
+            <button id="yes-button" class="bg-[#FF69B4] text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-[#FFC0CB] transition-colors">BTS</button>
+            <button id="no-button" class="bg-[#FF69B4] text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-[#FFC0CB] transition-colors">seventeen</button>
+        </div>
+    </div>
+    
+    <script>
+        const questionText = document.getElementById('question-text');
+        const optionsDiv = document.getElementById('options');
+        const yesButton = document.getElementById('yes-button');
+        const noButton = document.getElementById('no-button');
+        const body = document.body;
+
+        const emojis = {
+            yes: ['😒', '😤', '🤢', '🤮', '💢', '😠', '💜'],
+            no: ['😔', '😞', '😥', '🙁', '😢', '💔', '😭']
+        };
+
+        function createEmoji(type) {
+            const emoji = document.createElement('div');
+            emoji.className = `emoji ${type}`;
+            emoji.textContent = emojis[type][Math.floor(Math.random() * emojis[type].length)];
+            
+            body.appendChild(emoji);
+
+            // Trigger the transition after the element is added to the DOM
+            setTimeout(() => {
+                const offsetX = (Math.random() - 0.5) * 400;
+                const offsetY = (Math.random() - 0.5) * 400;
+                emoji.style.transform = `translate(-50%, -50%) translate(${offsetX}px, ${offsetY}px) scale(1) rotate(${Math.random() * 360}deg)`;
+                emoji.style.opacity = 1;
+            }, 10);
+            
+            setTimeout(() => {
+                emoji.remove();
+            }, 1500); // Remove after animation
+        }
+
+        function createEmojis(type) {
+            // Create multiple emojis to simulate a "burst"
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => createEmoji(type), i * 30);
+            }
+        }
+
+        yesButton.addEventListener('click', () => {
+            questionText.textContent = "But we hate you , get lost!";
+            optionsDiv.classList.add('hidden');
+            createEmojis('yes');
+        });
+
+        noButton.addEventListener('click', () => {
+            questionText.textContent = "Dhokebazzzzz";
+            optionsDiv.classList.add('hidden');
+            createEmojis('no');
+        });
+    </script>
+</body>
+</html>

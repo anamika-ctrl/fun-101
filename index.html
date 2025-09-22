@@ -38,6 +38,14 @@
             padding: 1rem;
             transition: opacity 0.5s ease-in-out;
             text-align: center;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        #divya-page.bts-bg {
+            background-image: url('https://github.com/anamika-ctrl/fun-101/blob/main/BTS%20doodles.jpeg');
+            background-repeat: repeat;
+            background-size: 150px;
         }
 
         .emoji {
@@ -160,7 +168,7 @@
 
         enterButton.addEventListener('click', () => {
             const name = nameInput.value.toLowerCase().trim();
-            if (name ==='divya' || name === 'divya rana') {
+            if (name === 'divya') {
                 entryPage.classList.add('hidden');
                 divyaPage.classList.remove('hidden');
             } else if (name === 'shefali' || name === 'shefali mathur') {
@@ -174,12 +182,14 @@
         yesButton.addEventListener('click', () => {
             questionTextDivya.textContent = "But we hate you , get lost!";
             optionsDivya.classList.add('hidden');
+            divyaPage.classList.add('bts-bg'); // Add the new class
             createEmojis('divya_yes');
         });
 
         noButton.addEventListener('click', () => {
             questionTextDivya.textContent = "Dhokebazzzzz";
             optionsDivya.classList.add('hidden');
+            divyaPage.classList.remove('bts-bg'); // Remove the class if they say no
             createEmojis('divya_no');
         });
 
